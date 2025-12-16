@@ -1,36 +1,86 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Project Specification: Personal Finance Management Web App
 
-## Getting Started
+## 1. Project Overview
 
-First, run the development server:
+A responsive web application for personal finance management (PFM). The app allows users to track income/expenses, set budgets, view reports, and manage daily financial activities.
+**Target Platform:** Mobile-first Web App (PWA ready).
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 2. Tech Stack
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **Frontend:** ReactJS (Vite), TypeScript.
+- **UI Framework:** Tailwind CSS.
+- **Component Library:** **shadcn/ui** (Critical requirement).
+- **State Management:** Zustand or React Context API.
+- **Charts:** Recharts or Chart.js.
+- **Date Handling:** date-fns.
+- **Icons:** Lucide React.
+- **Data Export:** xlsx (for Excel), jspdf (for PDF).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 3. Core Features & Requirements
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 3.1. Onboarding & Settings
 
-## Learn More
+- **Theme:** Support Light/Dark mode using `shadcn/ui` theme toggle. Allow selecting "Accent Colors" (e.g., Blue, Green, Violet).
+- **Fiscal Settings:** User can select the **Start Day of the Month** (e.g., Start on the 1st or the 15th).
+- **Currency:** Default to VND (Vietnam Dong).
 
-To learn more about Next.js, take a look at the following resources:
+### 3.2. Transaction Management (Core)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Input UI:**
+  - Use a **Tabs Component** to switch between **Income** and **Expense**.
+  - **Fields:**
+    - Amount (Auto-format with thousand separators).
+    - Date (Default: Today. Use a Calendar picker).
+    - Category (Select from dropdown/combobox).
+    - Note (Text input).
+- **Categories:**
+  - **Expense Defaults:** Food & Beverage, Daily Living, Clothing, Cosmetics, Transportation, etc.
+  - **Income Defaults:** Salary, Allowance, Side Hustle, Investment.
+  - **Customization:** Allow users to Add new categories or Hide unused ones.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 3.3. Calendar View (History)
 
-## Deploy on Vercel
+- **Calendar UI:** Display a monthly calendar.
+  - Dates with transactions should have a visual indicator (dot or color).
+- **Interaction:** Clicking a specific date opens a detail view (Drawer or Modal) showing:
+  - Total Income for that day.
+  - Total Expense for that day.
+  - List of transactions for that day.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 3.4. Reporting & Analytics (Chart Tab)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Pie Chart:** Expense Structure (distribution by category).
+- **Bar Chart:** Monthly Income vs. Expense comparison.
+- **Trend Line:** Expense trend comparison (This Month vs. Last Month).
+- **Cashflow:** Real-time cash flow visualization.
+
+### 3.5. Planning & Budgeting
+
+- **Budget Setup:** Allow setting a monthly limit for specific categories (e.g., "Food: 2,000,000 VND").
+- **Progress Tracking:** Display a Progress Bar for each budgeted category.
+  - Green: < 80%
+  - Yellow: 80% - 99%
+  - Red: >= 100%
+- **Alerts:** Show a Toast Notification if a new transaction causes a budget overflow.
+- **Recurring Transactions:** Feature to auto-add fixed costs (Rent, Netflix, Spotify) daily/weekly/monthly.
+
+### 3.6. Data Export
+
+- **Formats:** Export data to **Excel (.xlsx)** and **Word/PDF**.
+- **Scope:** Export list of transactions filtered by month.
+
+### 3.7. Monetization (Free vs. Premium)
+
+- **Logic:** Implement a `isPremium` user state.
+- **Free Plan:**
+  - Show Advertisement placeholders (Banner at bottom, Interstitial on Report tab).
+  - Limited Budget slots.
+- **Premium Plan:**
+  - No Ads.
+  - Unlimited Budgets.
+  - Advanced Export features.
+
+### 3.8. Gamification (Engagement)
+
+- **Badges:** Unlock visual badges for achievements (e.g., "Under Budget for 7 Days").
+- **Compliments:** Display random encouraging messages when the user saves money.
